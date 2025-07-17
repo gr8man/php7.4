@@ -34,6 +34,11 @@ RUN apt-get update && apt-get install -y \
 # Skopiuj własny plik konfiguracyjny OPcache (opcjonalnie)
 COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
+# Konfiguracja logowania PHP do stderr
+RUN echo "log_errors = On" > /usr/local/etc/php/conf.d/90-log-errors.ini && \
+    echo "error_log = /proc/self/fd/2" >> /usr/local/etc/php/conf.d/90-log-errors.ini && \
+    echo "display_errors = Off" >> /usr/local/etc/php/conf.d/90-log-errors.ini
+
 # Ustaw domyślną strefę czasową
 ENV TZ=Europe/Warsaw
 RUN echo "date.timezone=${TZ}" > /usr/local/etc/php/conf.d/timezone.ini
