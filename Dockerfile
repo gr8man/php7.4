@@ -32,7 +32,7 @@ RUN apt-get update && apt-get install -y \
     && a2enmod rewrite
 
 # Skopiuj własny plik konfiguracyjny OPcache (opcjonalnie)
-COPY ./php.ini /usr/local/etc/php/conf.d/opcache.ini
+COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 # Ustaw domyślną strefę czasową
 ENV TZ=Europe/Warsaw
