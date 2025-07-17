@@ -1,6 +1,6 @@
 FROM php:7.4-apache
 
-# Zainstaluj potrzebne narzędzia i rozszerzenia
+# Zainstaluj wymagane pakiety systemowe i rozszerzenia PHP
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -17,7 +17,10 @@ RUN apt-get update && apt-get install -y \
     libldap2-dev \
     libjpeg62-turbo-dev \
     libgd-dev \
+    libc-client-dev \
+    libkrb5-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install \
         gd \
         mysqli \
@@ -29,6 +32,8 @@ RUN apt-get update && apt-get install -y \
         xsl \
         curl \
         ldap \
+        mbstring \
+        imap \
     && a2enmod rewrite
 
 # Skopiuj własny plik konfiguracyjny OPcache (opcjonalnie)
