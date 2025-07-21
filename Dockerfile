@@ -40,6 +40,13 @@ RUN apt-get update && apt-get install -y \
 # Skopiuj własny plik konfiguracyjny OPcache (opcjonalnie)
 COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
+# Włącz mod_remoteip
+RUN a2enmod remoteip
+
+# Skopiuj konfigurację remoteip (plik dodamy poniżej)
+COPY remoteip.conf /etc/apache2/conf-available/remoteip.conf
+RUN a2enconf remoteip
+
 # Konfiguracja logowania PHP do stderr
 RUN echo "log_errors = On" > /usr/local/etc/php/conf.d/90-log-errors.ini && \
     echo "error_log = /proc/self/fd/2" >> /usr/local/etc/php/conf.d/90-log-errors.ini && \
