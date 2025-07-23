@@ -2,6 +2,8 @@ FROM php:7.4-apache
 
 # Zainstaluj wymagane pakiety systemowe i rozszerzenia PHP + Imagick
 RUN apt-get update && apt-get install -y \
+    imagemagick \
+    libmagickwand-dev \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
