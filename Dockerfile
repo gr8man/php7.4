@@ -36,8 +36,6 @@ RUN apt-get update && apt-get install -y \
         mbstring \
         imap \
         soap \
-    && pecl install imagick \
-    && docker-php-ext-enable imagick \
     && a2enmod rewrite
 
 # Skopiuj własny plik konfiguracyjny OPcache (opcjonalnie)
