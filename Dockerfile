@@ -1,6 +1,6 @@
 FROM php:7.4-apache
 
-# Zainstaluj wymagane pakiety systemowe i rozszerzenia PHP
+# Zainstaluj wymagane pakiety systemowe i rozszerzenia PHP + Imagick
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y \
     libgd-dev \
     libc-client-dev \
     libkrb5-dev \
+    libmagickwand-dev --no-install-recommends \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install \
@@ -35,6 +36,8 @@ RUN apt-get update && apt-get install -y \
         mbstring \
         imap \
         soap \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
     && a2enmod rewrite
 
 # Skopiuj własny plik konfiguracyjny OPcache (opcjonalnie)
