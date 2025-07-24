@@ -1,7 +1,7 @@
 FROM php:7.4-apache
 
 # Zainstaluj wymagane pakiety systemowe i rozszerzenia PHP + Imagick
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get upgrade && apt-get install -y \
     imagemagick \
     libmagickwand-dev \
     libpng-dev \
@@ -38,7 +38,13 @@ RUN apt-get update && apt-get install -y \
         mbstring \
         imap \
         soap \
+    && pear upgrade --force Archive_Tar \
+    && pear upgrade --force Structures_Graph \
+    && pear upgrade --force PEAR \
     && a2enmod rewrite
+    
+RUN yes '' | pecl install imagick \
+    && docker-php-ext-enable imagick
 
 # Skopiuj własny plik konfiguracyjny OPcache (opcjonalnie)
 COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
