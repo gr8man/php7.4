@@ -60,8 +60,9 @@ RUN a2enconf remoteip
 RUN echo "log_errors = On" > /usr/local/etc/php/conf.d/90-log-errors.ini && \
     echo "error_log = /proc/self/fd/2" >> /usr/local/etc/php/conf.d/90-log-errors.ini && \
     echo "display_errors = Off" >> /usr/local/etc/php/conf.d/90-log-errors.ini
-RUN echo "upload_max_filesize = 150M" >> /etc/php/8.1/apache2/php.ini && \
-    echo "post_max_size = 150M" >> /etc/php/8.1/apache2/php.ini
+
+RUN echo "upload_max_filesize=150M\npost_max_size=150M" > /usr/local/etc/php/conf.d/uploads.ini
+
 
 # Ustaw domyślną strefę czasową
 ENV TZ=Europe/Warsaw
