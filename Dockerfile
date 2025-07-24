@@ -1,7 +1,7 @@
 FROM php:7.4-apache
 
 # Zainstaluj wymagane pakiety systemowe i rozszerzenia PHP + Imagick
-RUN apt-get update && apt-get upgrade && apt-get install -y \
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     imagemagick \
     libmagickwand-dev \
     libpng-dev \
@@ -60,6 +60,8 @@ RUN a2enconf remoteip
 RUN echo "log_errors = On" > /usr/local/etc/php/conf.d/90-log-errors.ini && \
     echo "error_log = /proc/self/fd/2" >> /usr/local/etc/php/conf.d/90-log-errors.ini && \
     echo "display_errors = Off" >> /usr/local/etc/php/conf.d/90-log-errors.ini
+RUN echo "upload_max_filesize = 150M" >> /etc/php/8.1/apache2/php.ini && \
+    echo "post_max_size = 150M" >> /etc/php/8.1/apache2/php.ini
 
 # Ustaw domyślną strefę czasową
 ENV TZ=Europe/Warsaw
