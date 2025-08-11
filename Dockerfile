@@ -49,6 +49,8 @@ RUN yes '' | pecl install imagick \
 # Skopiuj własny plik konfiguracyjny OPcache (opcjonalnie)
 COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
+COPY ./policy.xml /etc/ImageMagick-6/policy.xml
+
 # Włącz mod_remoteip
 RUN a2enmod remoteip
 
